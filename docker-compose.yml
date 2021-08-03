@@ -7,21 +7,36 @@ services:
   ##
   #######################
   redis:
-    image: "redis"
+    image: redis
     container_name: redis
     hostname: redis
     expose:
-      - 6379
+      - ${REDIS_PORT}
     ports:
-     - "6379:6379"
+     - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
-      - $PWD/redis/redis-data:/var/lib/redis
-      - $PWD/redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/redis-data:/var/lib/redis
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
-     - REDIS_REPLICATION_MODE=master
+     - REDIS_REPLICATION_MODE=${REDIS_REPLICATION_MODE}
     networks:
-      node_net:
-        
+      db-common-network:
+
+  mongo:
+    image: mongo
+    # environment:
+      # - MONGO_INITDB_DATABASE=${MONGO_DATABASE}
+      # - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+      # - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    volumes:
+      - ./mongo/mongo-volume:/data/db
+    ports:
+      - ${MONGO_EXPORT_PORT}:${MONGO_PORT}
+    networks:
+      db-common-network:
+    restart: unless-stopped
+
+
 
   ####################### 
   ##
@@ -34,14 +49,34 @@ services:
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-    - REDIS_HOSTS=local:redis:6379
+    - "REDIS_HOSTS=${REDIS_COMMANDER_REDIS_HOSTS}"
+    depends_on:
+      - redis
     ports:
-    - "8081:8081"
+    - "${REDIS_COMMANDER_EXPORT_PORT}:${REDIS_COMMANDER_PORT}"
     networks:
-      node_net:
+      db-common-network:
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      # - ME_CONFIG_MONGODB_PORT=${MONGO_PORT}
+      # - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      # - ME_CONFIG_MONGODB_AUTH_DATABASE=${MONGO_DATABASE}
+      # - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME}
+      # - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
+      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+    ports:
+      - "${MONGOEXPRESS_EXPORT_PORT}:${MONGOEXPRESS_PORT}"
+    depends_on:
+      - mongo
+    networks:
+      db-common-network:
 
 # networking for containers
 networks:
-  node_net:
-    ipam:
-      driver: default
+  db-common-network:
+    driver: bridge
