@@ -1,8 +1,15 @@
-version: "3.2"
+version: "3"
+
 services:
- redis:
+  ####################### 
+  ##
+  ##  DATABASES CORE
+  ##
+  #######################
+  redis:
     image: "redis"
-    container_name: cache
+    container_name: redis
+    hostname: redis
     expose:
       - 6379
     ports:
@@ -14,12 +21,27 @@ services:
      - REDIS_REPLICATION_MODE=master
     networks:
       node_net:
-        # ipv4_address: 172.28.1.4
+        
 
-# networking for the Redis container
+  ####################### 
+  ##
+  ##  DATABASES GUI
+  ##
+  #######################
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+    - REDIS_HOSTS=local:redis:6379
+    ports:
+    - "8081:8081"
+    networks:
+      node_net:
+
+# networking for containers
 networks:
   node_net:
     ipam:
       driver: default
-      # config:
-      #   - subnet: 172.28.0.0/16

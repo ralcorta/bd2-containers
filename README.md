@@ -15,6 +15,7 @@ This repository contains a Docker Compose file with a configuration for setting 
 ## Features
 
 - [Redis](https://redis.io)
+- [Redis commander](https://github.com/joeferner/redis-commander)
 - ✨More new features comming soon!
 
 ##### Tips:
@@ -41,6 +42,14 @@ $ sudo docker-compose up -d
 [top] Docker composition parameter to download, create and configure containers.
 [-d] Create the process in the background. If you want to see the creation of the process and the console, you can remove this flag.
 
+## Remove dockers
+
+If you want to remove the containers created by the docker-compose command, you can type this:
+
+```sh
+$ sudo docker-compose down -v
+```
+
 
 ## Docker Access
 
@@ -48,6 +57,7 @@ After starting the containers you will be able to access them throught his URL:P
 
 ```sh
 Redis: localhost:6379
+Redis GUI (redis-commander): localhost:8081
 ```
 
 ## License
