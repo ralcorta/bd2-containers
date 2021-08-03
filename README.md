@@ -26,7 +26,7 @@ For testing apis: Mockaroo
 
 Required: [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/).
 If you have Windows or Mac, you can install [Docker desktop](https://docs.docker.com/desktop/dashboard/)
-| Operative System | Site URL|
+| Operating System | Site URL|
 | ------ | ------ |
 | Mac | [https://docs.docker.com/docker-for-mac/install](https://docs.docker.com/docker-for-mac/install) |
 | Windows | [https://docs.docker.com/docker-for-windows/install](https://docs.docker.com/docker-for-windows/install) |
