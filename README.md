@@ -17,6 +17,8 @@ This repository contains a Docker Compose file with a configuration for setting 
 
 - [Redis](https://redis.io)
 - [Redis commander](https://github.com/joeferner/redis-commander)
+- [Mongo](https://www.mongodb.com/)
+- [Mongo Express](https://github.com/mongo-express/mongo-express)
 - :rocket: &nbsp; More new features comming soon!
 
 ##### Tips:
@@ -57,10 +59,23 @@ $ sudo docker-compose down -v
 
 After starting the containers you will be able to access them throught their URL:PORT (like localhost:6379)
 
+Aclaration: The ports are listened inside of environment file (.env). You can change it as you like.
+
 <pre>
+
 Redis: localhost:6379
 Redis GUI (redis-commander): localhost:8081
+
+----
+
+Mongo: localhost:27017
+Mongo GUI (mongo-express): localhost:8888
+
 </pre>
+
+You can use those interfaces or download the one you like the most and access the main services.  
+Tip: Internally, containers communicate via service names, not localhost.
+
 
 ## License
 
