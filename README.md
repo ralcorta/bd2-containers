@@ -37,10 +37,10 @@ Install the dependencies and set up the containers.
 ```sh
 $ sudo docker-compose up -d
 ```
-[sudo] Run the process in Root mode.
-[docker-compose] The docker extension for managing multiple containers at the same time.
-[top] Docker composition parameter to download, create and configure containers.
-[-d] Create the process in the background. If you want to see the creation of the process and the console, you can remove this flag.
+[sudo] Run the process in Root mode.  
+[docker-compose] The docker extension for managing multiple containers at the same time.  
+[top] Docker composition parameter to download, create and configure containers.  
+[-d] Create the process in the background. If you want to see the creation of the process and the console, you can remove this flag.  
 
 ## Remove dockers
 
