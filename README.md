@@ -1,5 +1,5 @@
 # :rocket: BD2 - Docker Containers
-## Docker config of BD2 UADE
+## Docker config
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
