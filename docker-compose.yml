@@ -1,10 +1,11 @@
 version: "3"
 
 services:
-  ####################### 
-  ##
-  ##  DATABASES CORE
-  ##
+
+  #######################
+  ##                   ##
+  ##  DATABASES CORE   ##
+  ##                   ##
   #######################
   redis:
     image: redis
@@ -38,10 +39,10 @@ services:
 
 
 
-  ####################### 
-  ##
-  ##  DATABASES GUI
-  ##
+  #######################
+  ##                   ##
+  ##  DATABASES GUI    ##
+  ##                   ##
   #######################
   redis-commander:
     container_name: redis-commander
@@ -71,6 +72,19 @@ services:
       - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
     ports:
       - "${MONGOEXPRESS_EXPORT_PORT}:${MONGOEXPRESS_PORT}"
+    depends_on:
+      - mongo
+    networks:
+      db-common-network:
+
+  # This mongo gui is under testing, use carefully
+  mongo-gui:
+    image: ugleiton/mongo-gui
+    restart: always
+    ports:
+      - "${MONGO_GUI_EXPORT_PORT}:${MONGO_GUI_PORT}"
+    environment:
+      - MONGO_URL=mongodb://mongo:${MONGO_PORT}
     depends_on:
       - mongo
     networks:

@@ -17,6 +17,8 @@ This repository contains a Docker Compose file with a configuration for setting 
 
 - [Redis](https://redis.io)
 - [Redis commander](https://github.com/joeferner/redis-commander)
+- [Mongo](https://www.mongodb.com/)
+- [Mongo Express](https://github.com/mongo-express/mongo-express)
 - :rocket: &nbsp; More new features comming soon!
 
 ##### Tips:
