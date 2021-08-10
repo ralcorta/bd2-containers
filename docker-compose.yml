@@ -45,9 +45,9 @@ services:
     environment: 
       NEO4J_AUTH: neo4j/test
     volumes: 
-      - ./plugins:/plugins
-      - ./data:/data
-      - ./import:/import
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/data:/data
+      - ./neo4j/import:/import
     networks: 
       db-common-network:
 
