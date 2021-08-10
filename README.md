@@ -34,7 +34,7 @@ If you have Windows or Mac, you can install [Docker desktop](https://docs.docker
 | Mac | [https://docs.docker.com/docker-for-mac/install](https://docs.docker.com/docker-for-mac/install) |
 | Windows | [https://docs.docker.com/docker-for-windows/install](https://docs.docker.com/docker-for-windows/install) |
 
-If you are in a GNU/Linux distribution and you don't wanna write all commands to install dependencies, you can take a look at this page [Gist](https://gist.github.com/EvgenyOrekhov/1ed8a4466efd0a59d73a11d753c0167b)
+If you are on a GNU / Linux distribution and you don't want to type all the commands to install dependencies, you can take a look at this [Gist](https://gist.github.com/EvgenyOrekhov/1ed8a4466efd0a59d73a11d753c0167b)
 
 ## Installation
 
