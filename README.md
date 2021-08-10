@@ -19,6 +19,7 @@ This repository contains a Docker Compose file with a configuration for setting 
 - [Redis commander](https://github.com/joeferner/redis-commander)
 - [Mongo](https://www.mongodb.com/)
 - [Mongo Express](https://github.com/mongo-express/mongo-express)
+- [Neo4J](https://neo4j.com)
 - :rocket: &nbsp; More new features coming soon!
 
 ##### Tips:
@@ -70,6 +71,12 @@ Redis GUI (redis-commander): localhost:8081
 
 Mongo: localhost:27017
 Mongo GUI (mongo-express): localhost:8888
+
+
+----
+
+Neo4J: localhost:7474
+Neo4J GUI: localhost:7687
 
 </pre>
 
