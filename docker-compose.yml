@@ -1,7 +1,6 @@
 version: "3"
 
 services:
-
   #######################
   ##                   ##
   ##  DATABASES CORE   ##
@@ -14,21 +13,21 @@ services:
     expose:
       - ${REDIS_PORT}
     ports:
-     - ${REDIS_PORT}:${REDIS_PORT}
+      - ${REDIS_PORT}:${REDIS_PORT}
     volumes:
       - ./redis/redis-data:/var/lib/redis
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
-     - REDIS_REPLICATION_MODE=${REDIS_REPLICATION_MODE}
+      - REDIS_REPLICATION_MODE=${REDIS_REPLICATION_MODE}
     networks:
       db-common-network:
 
   mongo:
     image: mongo
     # environment:
-      # - MONGO_INITDB_DATABASE=${MONGO_DATABASE}
-      # - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-      # - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+    # - MONGO_INITDB_DATABASE=${MONGO_DATABASE}
+    # - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+    # - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
     volumes:
       - ./mongo/mongo-volume:/data/db
     ports:
@@ -37,7 +36,20 @@ services:
       db-common-network:
     restart: unless-stopped
 
-
+  neo4j:
+    image: neo4j:latest
+    restart: unless-stopped
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: neo4j/test
+    volumes:
+      - ./neo4j/plugins:/plugins
+      - ./neo4j/data:/data
+      - ./neo4j/import:/import
+    networks:
+      db-common-network:
 
   #######################
   ##                   ##
@@ -50,45 +62,24 @@ services:
     image: rediscommander/redis-commander:latest
     restart: always
     environment:
-    - "REDIS_HOSTS=${REDIS_COMMANDER_REDIS_HOSTS}"
+      - "REDIS_HOSTS=${REDIS_COMMANDER_REDIS_HOSTS}"
     depends_on:
       - redis
     ports:
-    - "${REDIS_COMMANDER_EXPORT_PORT}:${REDIS_COMMANDER_PORT}"
+      - "${REDIS_COMMANDER_EXPORT_PORT}:${REDIS_COMMANDER_PORT}"
     networks:
       db-common-network:
 
-  mongo-express:
-    image: mongo-express
-    restart: always
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      # - ME_CONFIG_MONGODB_PORT=${MONGO_PORT}
-      # - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
-      # - ME_CONFIG_MONGODB_AUTH_DATABASE=${MONGO_DATABASE}
-      # - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME}
-      # - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
-      - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_LOGIN}
-      - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
-    ports:
-      - "${MONGOEXPRESS_EXPORT_PORT}:${MONGOEXPRESS_PORT}"
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+    container_name: mongoclient
+    hostname: mongoclient
     depends_on:
       - mongo
     networks:
-      db-common-network:
-
-  # This mongo gui is under testing, use carefully
-  mongo-gui:
-    image: ugleiton/mongo-gui
-    restart: always
+      - db-common-network
     ports:
-      - "${MONGO_GUI_EXPORT_PORT}:${MONGO_GUI_PORT}"
-    environment:
-      - MONGO_URL=mongodb://mongo:${MONGO_PORT}
-    depends_on:
-      - mongo
-    networks:
-      db-common-network:
+      - 3300:3000
 
 # networking for containers
 networks:
